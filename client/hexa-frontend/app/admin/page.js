@@ -10,8 +10,7 @@ export default function Admin() {
   const [approvedPosts, setApprovedPosts] = useState([]);
   const [error, setError] = useState("");
   const router = useRouter();
-  const [userId ,setUserId] = useState('');
-  
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -25,7 +24,7 @@ export default function Admin() {
       try {
         // Fetch pending posts
         const pendingRes = await axios.get(
-          "http://localhost:5000/api/posts/admin/pending",
+          "https://hexawealth-backend.onrender.com/api/posts/admin/pending",
           {
             headers: { Authorization: `${token}` },
           }
@@ -34,7 +33,7 @@ export default function Admin() {
 
         // Fetch approved posts
         const approvedRes = await axios.get(
-          "http://localhost:5000/api/posts/admin/approved",
+          "https://hexawealth-backend.onrender.com/api/posts/admin/approved",
           {
             headers: { Authorization: `${token}` },
           }
@@ -50,9 +49,9 @@ export default function Admin() {
 
   const handleApprove = async (postId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const res = await axios.patch(
-        `http://localhost:5000/api/posts/${postId}/approve`,
+        `https://hexawealth-backend.onrender.com/api/posts/${postId}/approve`,
         {},
         {
           headers: { Authorization: `${token}` },
@@ -72,9 +71,9 @@ export default function Admin() {
 
   const handleDelete = async (postId, type) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const res = await axios.delete(
-        `http://localhost:5000/api/posts/${postId}`,
+        `https://hexawealth-backend.onrender.com/api/posts/${postId}`,
         {
           headers: { Authorization: `${token}` },
         }
@@ -111,7 +110,9 @@ export default function Admin() {
       </header>
 
       <div className="p-6 container mx-auto relative z-10">
-        <h2 className="text-4xl font-bold mt-6 mb-8 text-black">Pending Posts</h2>
+        <h2 className="text-4xl font-bold mt-6 mb-8 text-black">
+          Pending Posts
+        </h2>
         {error && <p className="text-red-500">{error}</p>}
 
         {pendingPosts.length > 0 ? (
@@ -122,9 +123,14 @@ export default function Admin() {
                 className="p-4 bg-white bg-opacity-10 rounded-lg shadow-lg border border-gray-200 hover:cursor-pointer text-white"
                 style={{ boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)" }}
               >
-                 <div className="hover:cursor-pointer" onClick={()=> router.push(`/posts/${post._id}`)}>
-                <h4 className="font-semibold text-black mb-4 text-3xl">{post.title}</h4>
-                <div className="mt-2 mb-4 space-x-2 ">
+                <div
+                  className="hover:cursor-pointer"
+                  onClick={() => router.push(`/posts/${post._id}`)}
+                >
+                  <h4 className="font-semibold text-black mb-4 text-3xl">
+                    {post.title}
+                  </h4>
+                  <div className="mt-2 mb-4 space-x-2 ">
                     {post.tags?.map((tag, index) => (
                       <span
                         key={index}
@@ -135,10 +141,13 @@ export default function Admin() {
                     ))}
                   </div>
 
-               {/* Display first 20 words of content */}
-               <p className="font-semibold mb-2 text-lg text-gray-800">
-                  {post && post.content&& post.content.split(" ").slice(0, 10).join(" ")}...
-                </p>
+                  {/* Display first 20 words of content */}
+                  <p className="font-semibold mb-2 text-lg text-gray-800">
+                    {post &&
+                      post.content &&
+                      post.content.split(" ").slice(0, 10).join(" ")}
+                    ...
+                  </p>
                 </div>
                 <button
                   className="text-gray-600 underline"
@@ -147,7 +156,8 @@ export default function Admin() {
                   Read More
                 </button>
                 <div className="mt-2 text-sm text-gray-400">
-                  Posted on: {format(new Date(post.createdAt), "MMM dd, yyyy HH:mm:ss")}
+                  Posted on:{" "}
+                  {format(new Date(post.createdAt), "MMM dd, yyyy HH:mm:ss")}
                 </div>
                 <div className="mt-4 flex justify-end space-x-4">
                   <button
@@ -170,19 +180,26 @@ export default function Admin() {
           <p className="text-gray-400">No pending posts to display.</p>
         )}
 
-        <h2 className="text-4xl font-bold mb-8 mt-10 text-black">Approved Posts</h2>
+        <h2 className="text-4xl font-bold mb-8 mt-10 text-black">
+          Approved Posts
+        </h2>
         {approvedPosts.length > 0 ? (
-          <div  className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-6">
             {approvedPosts.map((post) => (
               <div
-                key={post._id || 'fda'}
+                key={post._id || "fda"}
                 className="p-4 bg-white bg-opacity-10 rounded-lg shadow-lg border border-gray-200 hover:cursor-pointer text-white"
                 style={{ boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)" }}
               >
-                 <div className="hover:cursor-pointer" onClick={()=> router.push(`/posts/${post._id}`)}>
-                <h4 className="font-semibold text-black text-3xl mb-4">{post.title}</h4>
+                <div
+                  className="hover:cursor-pointer"
+                  onClick={() => router.push(`/posts/${post._id}`)}
+                >
+                  <h4 className="font-semibold text-black text-3xl mb-4">
+                    {post.title}
+                  </h4>
 
-                <div className="mt-2 mb-4 space-x-2 ">
+                  <div className="mt-2 mb-4 space-x-2 ">
                     {post.tags?.map((tag, index) => (
                       <span
                         key={index}
@@ -192,22 +209,28 @@ export default function Admin() {
                       </span>
                     ))}
                   </div>
-                
-                {/* Display first 20 words of content */}
-                <p className="font-semibold mb-2 text-lg text-gray-800">
-                  {post&& post.content && post.content.split(" ").slice(0, 10).join(" ")}...
-                </p>
-                <button
-                  className="text-gray-600 underline"
-                  onClick={() => router.push(`/posts/${post._id}`)}
-                >
-                  Read More
-                </button>
+
+                  {/* Display first 20 words of content */}
+                  <p className="font-semibold mb-2 text-lg text-gray-800">
+                    {post &&
+                      post.content &&
+                      post.content.split(" ").slice(0, 10).join(" ")}
+                    ...
+                  </p>
+                  <button
+                    className="text-gray-600 underline"
+                    onClick={() => router.push(`/posts/${post._id}`)}
+                  >
+                    Read More
+                  </button>
                 </div>
 
-                {post && post.createdAt&& <div className="mt-2 text-sm text-gray-400">
-                  Posted on: {format(new Date(post.createdAt), "MMM dd, yyyy HH:mm:ss")}
-                </div>}
+                {post && post.createdAt && (
+                  <div className="mt-2 text-sm text-gray-400">
+                    Posted on:{" "}
+                    {format(new Date(post.createdAt), "MMM dd, yyyy HH:mm:ss")}
+                  </div>
+                )}
                 <div className="mt-4 flex justify-end">
                   <button
                     onClick={() => handleDelete(post._id, "approved")}

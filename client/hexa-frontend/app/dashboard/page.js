@@ -7,7 +7,7 @@ import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
 import AddPost from "../_components/AddPost";
 import { FaPlus } from "react-icons/fa";
-import {format} from 'date-fns';
+import { format } from "date-fns";
 import { FaRegComment } from "react-icons/fa";
 
 export default function Dashboard() {
@@ -22,9 +22,7 @@ export default function Dashboard() {
   const router = useRouter();
 
   const [addPost, setAddPost] = useState(false);
-  const [userId, setUserId] = useState('');
-
-  
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -38,7 +36,7 @@ export default function Dashboard() {
       try {
         // Fetch user info
         const userRes = await axios.get(
-          `http://localhost:5000/api/auth/user/${userId}`,
+          `https://hexawealth-backend.onrender.com/api/auth/user/${userId}`,
           {
             headers: { Authorization: `${token}` },
           }
@@ -46,17 +44,20 @@ export default function Dashboard() {
         console.log("this is userinfo", userRes.data.user);
         setUserInfo(userRes.data.user);
 
-        const postsRes = await axios.get("http://localhost:5000/api/posts", {
-          headers: { Authorization: `${token}` },
-        });
+        const postsRes = await axios.get(
+          "https://hexawealth-backend.onrender.com/api/posts",
+          {
+            headers: { Authorization: `${token}` },
+          }
+        );
 
         const updatedPosts = await Promise.all(
           postsRes.data.map(async (post) => {
             const likesCount = await fetchLikesCount(post._id);
             const liked = await fetchLikesState(post._id); // Fetch the like state
             const commentsCount = await fetchCommentsCount(post._id);
-            
-            return { ...post, likesCount, liked , commentsCount};
+
+            return { ...post, likesCount, liked, commentsCount };
           })
         );
 
@@ -77,7 +78,7 @@ export default function Dashboard() {
 
   const commentHandler = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       console.log("req bdoy of comment ", {
         userId: userId,
         postId: selectedPost._id,
@@ -85,7 +86,7 @@ export default function Dashboard() {
       });
 
       const res = await axios.post(
-        "http://localhost:5000/api/comments",
+        "https://hexawealth-backend.onrender.com/api/comments",
         {
           userId: userId,
           postId: selectedPost._id,
@@ -98,11 +99,8 @@ export default function Dashboard() {
         }
       );
 
-      
-
       setCommentInput("");
       setSelectedPost(null);
-
     } catch (err) {
       console.error("Error posting comment:", err);
     }
@@ -110,9 +108,9 @@ export default function Dashboard() {
 
   const fetchLikesState = async (postId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const res = await axios.get(
-        `http://localhost:5000/api/likes?postId=${postId}&userId=${userId}`,
+        `https://hexawealth-backend.onrender.com/api/likes?postId=${postId}&userId=${userId}`,
         {
           headers: { Authorization: `${token}` },
         }
@@ -126,9 +124,9 @@ export default function Dashboard() {
 
   const fetchLikesCount = async (postId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const res = await axios.get(
-        `http://localhost:5000/api/likes/likes?postId=${postId}`
+        `https://hexawealth-backend.onrender.com/api/likes/likes?postId=${postId}`
       );
       return res.data.likesCount || 0;
     } catch (err) {
@@ -139,9 +137,9 @@ export default function Dashboard() {
 
   const fetchCommentsCount = async (postId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const res = await axios.get(
-        `http://localhost:5000/api/comments?postId=${postId}`
+        `https://hexawealth-backend.onrender.com/api/comments?postId=${postId}`
       );
       return res.data.commentsCount || 0;
     } catch (err) {
@@ -150,13 +148,11 @@ export default function Dashboard() {
     }
   };
 
-  
-
   const fetchComments = async (postId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const commentsRes = await axios.get(
-        `http://localhost:5000/api/comments/${postId}`,
+        `https://hexawealth-backend.onrender.com/api/comments/${postId}`,
         {
           headers: { Authorization: `${token}` },
         }
@@ -174,9 +170,9 @@ export default function Dashboard() {
 
   const handleLike = async (postId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const likeRes = await axios.get(
-        `http://localhost:5000/api/likes?postId=${postId}&userId=${userId}`,
+        `https://hexawealth-backend.onrender.com/api/likes?postId=${postId}&userId=${userId}`,
         {
           headers: { Authorization: `${token}` },
         }
@@ -185,10 +181,13 @@ export default function Dashboard() {
 
       if (alreadyLiked) {
         // Remove the like
-        await axios.delete("http://localhost:5000/api/likes", {
-          data: { userId, postId },
-          headers: { Authorization: `${token}` },
-        });
+        await axios.delete(
+          "https://hexawealth-backend.onrender.com/api/likes",
+          {
+            data: { userId, postId },
+            headers: { Authorization: `${token}` },
+          }
+        );
 
         setPosts(
           posts.map((post) =>
@@ -200,7 +199,7 @@ export default function Dashboard() {
       } else {
         // Like the post
         await axios.post(
-          "http://localhost:5000/api/likes",
+          "https://hexawealth-backend.onrender.com/api/likes",
           { userId, postId },
           {
             headers: { Authorization: `${token}` },
@@ -235,14 +234,13 @@ export default function Dashboard() {
   };
 
   return (
-    <div
-      className="min-h-screen bg-cover bg-center relative"
-      
-    >
+    <div className="min-h-screen bg-cover bg-center relative">
       <div className="absolute inset-0 z-0 bg-white"></div>
 
       <header className="bg-white p-4 shadow-md flex justify-between items-center relative z-10 md:px-8">
-        <h1 className="text-xl md:text-3xl font-bold text-black"><span className="text-blue-600 ">Hexa</span>Wealth</h1>
+        <h1 className="text-xl md:text-3xl font-bold text-black">
+          <span className="text-blue-600 ">Hexa</span>Wealth
+        </h1>
         <div className="flex items-center space-x-1 md:space-x-4">
           {userInfo?.isAdmin && (
             <button
@@ -272,10 +270,7 @@ export default function Dashboard() {
           <h2 className="text-4xl font-bold  py-2 px-2 text-gray-900">
             Welcome, {userInfo?.firstName} {userInfo?.lastName}
           </h2>
-          <AddPost
-            
-            onPostAdded={handlePostAdded}
-          />
+          <AddPost onPostAdded={handlePostAdded} />
         </div>
 
         <div className="space-y-4">
@@ -285,57 +280,68 @@ export default function Dashboard() {
                 <div
                   key={post._id}
                   className="p-4 bg-white bg-opacity-10 rounded-lg shadow-lg border border-gray-200  text-white"
-                  style={{boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.3)'}}
+                  style={{ boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)" }}
                 >
-                  <div className="hover:cursor-pointer" onClick={()=> router.push(`/posts/${post._id}`)}>
-                  <div className="flex justify-between mt-1 text-3xl">
-                    <h4 className="font-semibold text-black">{post.title}</h4>
+                  <div
+                    className="hover:cursor-pointer"
+                    onClick={() => router.push(`/posts/${post._id}`)}
+                  >
+                    <div className="flex justify-between mt-1 text-3xl">
+                      <h4 className="font-semibold text-black">{post.title}</h4>
+                    </div>
+                    <div className="flex justify-between mb-4">
+                      <h4 className="font-semibold text-gray-500">
+                        {post.userId?.email}
+                      </h4>
+                    </div>
+                    <div className="mt-2 mb-4 space-x-2 ">
+                      {post.tags?.map((tag, index) => (
+                        <span
+                          key={index}
+                          className="bg-white text-black border border-black px-3 py-1 rounded-md text-sm"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <div className="flex justify-between mb-4">
-                    <h4 className="font-semibold text-gray-500">{post.userId?.email}</h4>
-                  </div>
-                  <div className="mt-2 mb-4 space-x-2 ">
-                    {post.tags?.map((tag, index) => (
-                      <span
-                        key={index}
-                        className="bg-white text-black border border-black px-3 py-1 rounded-md text-sm"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  </div>
-                  <p className="font-semibold ml-1 mb-2 text-sm text-gray-500 hover:cursor-pointer" onClick={()=> router.push(`/posts/${post._id}`)}>
+                  <p
+                    className="font-semibold ml-1 mb-2 text-sm text-gray-500 hover:cursor-pointer"
+                    onClick={() => router.push(`/posts/${post._id}`)}
+                  >
                     {/* {post.content} */}
                     Read More...
                   </p>
-                  <div className="flex items-center space-x-4"> {/* space between like and comment */}
-  <div className="flex items-center space-x-2">
-    <div
-      className="cursor-pointer"
-      onClick={() => handleLike(post._id)}
-    >
-      {post.liked ? (
-        <AiFillLike className="text-black text-xl" /> 
-      ) : (
-        <AiOutlineLike className="text-black text-xl" />
-      )}
-    </div>
-    <span className="text-black text-lg">{post.likesCount}</span> 
-  </div>
-
-  <button
-    onClick={() => toggleComments(post._id)}
-    className="flex items-center text-gray-600 space-x-2"
-  >
-    <FaRegComment className="text-xl text-black" />
-    <span className="text-lg">{post.commentsCount}</span>
-    
-  </button>
-</div>
+                  <div className="flex items-center space-x-4">
+                    {" "}
+                    {/* space between like and comment */}
+                    <div className="flex items-center space-x-2">
+                      <div
+                        className="cursor-pointer"
+                        onClick={() => handleLike(post._id)}
+                      >
+                        {post.liked ? (
+                          <AiFillLike className="text-black text-xl" />
+                        ) : (
+                          <AiOutlineLike className="text-black text-xl" />
+                        )}
+                      </div>
+                      <span className="text-black text-lg">
+                        {post.likesCount}
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => toggleComments(post._id)}
+                      className="flex items-center text-gray-600 space-x-2"
+                    >
+                      <FaRegComment className="text-xl text-black" />
+                      <span className="text-lg">{post.commentsCount}</span>
+                    </button>
+                  </div>
 
                   <div className="mt-2 text-sm text-gray-400">
-                    Posted on: {format(new Date(post.createdAt), "MMM dd, yyyy HH:mm:ss")}
+                    Posted on:{" "}
+                    {format(new Date(post.createdAt), "MMM dd, yyyy HH:mm:ss")}
                   </div>
                 </div>
               ))
@@ -352,7 +358,7 @@ export default function Dashboard() {
           onClick={() => setShowCommentsDialog(false)}
         >
           <div
-            className="bg-white text-black p-8 rounded-lg max-w-lg w-full shadow-lg relative" 
+            className="bg-white text-black p-8 rounded-lg max-w-lg w-full shadow-lg relative"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
@@ -388,7 +394,9 @@ export default function Dashboard() {
                   <p className="font-semibold text-gray-600 text-sm">
                     {comment.userId.email}
                   </p>
-                  <p className="text-gray-700 text-md mt-2">{comment.content}</p>
+                  <p className="text-gray-700 text-md mt-2">
+                    {comment.content}
+                  </p>
                 </div>
               ))}
             </div>
