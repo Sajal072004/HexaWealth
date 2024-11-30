@@ -22,8 +22,7 @@ export default function Dashboard() {
 
   const [addPost, setAddPost] = useState(false);
 
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
+  
 
   const handlePostAdded = (newPost) => {
     setPosts((prevPosts) => [newPost, ...prevPosts]);
@@ -98,6 +97,8 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
     if (!token) {
       router.push("/login");
     }

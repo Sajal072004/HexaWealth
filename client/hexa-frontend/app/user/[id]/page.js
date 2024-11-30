@@ -10,10 +10,11 @@ const User = () => {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const token = localStorage.getItem("token"); // Assuming token-based authentication
-  const userId = localStorage.getItem("userId");
+  
 
   useEffect(() => {
+    const token = localStorage.getItem("token"); // Assuming token-based authentication
+  const userId = localStorage.getItem("userId");
     if (!token) {
       router.push("/login"); // Redirect to login if not authenticated
     }
