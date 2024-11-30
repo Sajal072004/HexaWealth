@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json()); // Parse JSON requests
 
 const corsOptions = {
-  origin: 'http://localhost:3000', // Change to your frontend URL
+  origin: '*', // Change to your frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
