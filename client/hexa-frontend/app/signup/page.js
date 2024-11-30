@@ -126,7 +126,7 @@ export default function Signup() {
               required
               className="w-full px-4 py-2 border border-gray-600 bg-white rounded-md text-black focus:outline-none focus:ring-1 focus:ring-black"
             />
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <input
                 type="checkbox"
                 checked={isAdmin}
@@ -134,7 +134,7 @@ export default function Signup() {
                 className="mr-2 text-gray-600"
               />
               <label className="text-sm text-gray-600">Admin (for demo)</label>
-            </div>
+            </div> */}
             {error && <p className="text-red-500 text-sm">{error}</p>}{" "}
             {/* Display error message */}
             <button
