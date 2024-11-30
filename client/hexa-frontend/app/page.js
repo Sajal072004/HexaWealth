@@ -36,7 +36,7 @@ export default function Home() {
       <section className="relative bg-white h-[85vh] flex items-center">
   <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 px-6 md:px-12 text-center md:text-left">
     {/* Left Content */}
-    <div className="flex flex-col justify-center space-y-6">
+    <div className="flex flex-col justify-center space-y-6 mt-48 mx-16 md:mx-0 md:mt-0">
       <h1 className="text-4xl md:text-5xl font-extrabold leading-tight text-black">
         Take Control of Your Finances with Hexawealth
       </h1>

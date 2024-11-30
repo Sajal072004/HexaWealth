@@ -28,7 +28,7 @@ const Post = ({ params }) => {
         const userId = localStorage.getItem("userId");
 
         const userRes = await axios.get(
-          `http://localhost:5000/api/auth/user/${userId}`,
+          `https://hexawealth-backend.onrender.com/api/auth/user/${userId}`,
           {
             headers: {
               Authorization: `${token}`,
@@ -59,7 +59,7 @@ const Post = ({ params }) => {
         const token = localStorage.getItem("token");
 
         const postRes = await axios.get(
-          `http://localhost:5000/api/posts/post/${id}`,
+          `https://hexawealth-backend.onrender.com/api/posts/post/${id}`,
           {
             headers: {
               Authorization: `${token}`,
@@ -69,7 +69,7 @@ const Post = ({ params }) => {
         setPost(postRes.data);
 
         const commentsRes = await axios.get(
-          `http://localhost:5000/api/comments/${id}`,
+          `https://hexawealth-backend.onrender.com/api/comments/${id}`,
           {
             headers: {
               Authorization: `${token}`,
@@ -117,7 +117,7 @@ const Post = ({ params }) => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/comments",
+        "https://hexawealth-backend.onrender.com/api/comments",
         {
           userId: userId,
           postId: post._id,

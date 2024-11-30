@@ -30,7 +30,7 @@ export default function AddPost({ userId, token, onPostAdded }) {
       });
 
       const response = await axios.post(
-        "http://localhost:5000/api/posts",
+        "https://hexawealth-backend.onrender.com/api/posts",
         {
           userId: userId,
           title: postData.title,
