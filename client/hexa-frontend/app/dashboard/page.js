@@ -22,86 +22,14 @@ export default function Dashboard() {
   const router = useRouter();
 
   const [addPost, setAddPost] = useState(false);
+  const [userId, setUserId] = useState('');
 
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
-
-  const handlePostAdded = (newPost) => {
-    setPosts((prevPosts) => [newPost, ...prevPosts]);
-  };
-
-  const commentHandler = async () => {
-    try {
-      console.log("req bdoy of comment ", {
-        userId: userId,
-        postId: selectedPost._id,
-        content: commentInput[selectedPost._id],
-      });
-
-      const res = await axios.post(
-        "http://localhost:5000/api/comments",
-        {
-          userId: userId,
-          postId: selectedPost._id,
-          content: commentInput[selectedPost._id],
-        },
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      );
-
-      
-
-      setCommentInput("");
-      setSelectedPost(null);
-
-    } catch (err) {
-      console.error("Error posting comment:", err);
-    }
-  };
-
-  const fetchLikesState = async (postId) => {
-    try {
-      const res = await axios.get(
-        `http://localhost:5000/api/likes?postId=${postId}&userId=${userId}`,
-        {
-          headers: { Authorization: `${token}` },
-        }
-      );
-      return res.data.exists; // Return whether the user has liked the post
-    } catch (err) {
-      console.error("Error fetching like state:", err);
-      return false;
-    }
-  };
-
-  const fetchLikesCount = async (postId) => {
-    try {
-      const res = await axios.get(
-        `http://localhost:5000/api/likes/likes?postId=${postId}`
-      );
-      return res.data.likesCount || 0;
-    } catch (err) {
-      console.error("Error fetching likes count:", err);
-      return 0;
-    }
-  };
-
-  const fetchCommentsCount = async (postId) => {
-    try {
-      const res = await axios.get(
-        `http://localhost:5000/api/comments?postId=${postId}`
-      );
-      return res.data.commentsCount || 0;
-    } catch (err) {
-      console.error("Error fetching likes count:", err);
-      return 0;
-    }
-  };
+  
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+    setUserId(userId);
     if (!token) {
       router.push("/login");
     }
@@ -143,8 +71,90 @@ export default function Dashboard() {
     fetchData();
   }, [currPost]);
 
+  const handlePostAdded = (newPost) => {
+    setPosts((prevPosts) => [newPost, ...prevPosts]);
+  };
+
+  const commentHandler = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      console.log("req bdoy of comment ", {
+        userId: userId,
+        postId: selectedPost._id,
+        content: commentInput[selectedPost._id],
+      });
+
+      const res = await axios.post(
+        "http://localhost:5000/api/comments",
+        {
+          userId: userId,
+          postId: selectedPost._id,
+          content: commentInput[selectedPost._id],
+        },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+
+      
+
+      setCommentInput("");
+      setSelectedPost(null);
+
+    } catch (err) {
+      console.error("Error posting comment:", err);
+    }
+  };
+
+  const fetchLikesState = async (postId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.get(
+        `http://localhost:5000/api/likes?postId=${postId}&userId=${userId}`,
+        {
+          headers: { Authorization: `${token}` },
+        }
+      );
+      return res.data.exists; // Return whether the user has liked the post
+    } catch (err) {
+      console.error("Error fetching like state:", err);
+      return false;
+    }
+  };
+
+  const fetchLikesCount = async (postId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.get(
+        `http://localhost:5000/api/likes/likes?postId=${postId}`
+      );
+      return res.data.likesCount || 0;
+    } catch (err) {
+      console.error("Error fetching likes count:", err);
+      return 0;
+    }
+  };
+
+  const fetchCommentsCount = async (postId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.get(
+        `http://localhost:5000/api/comments?postId=${postId}`
+      );
+      return res.data.commentsCount || 0;
+    } catch (err) {
+      console.error("Error fetching likes count:", err);
+      return 0;
+    }
+  };
+
+  
+
   const fetchComments = async (postId) => {
     try {
+      const token = localStorage.getItem('token');
       const commentsRes = await axios.get(
         `http://localhost:5000/api/comments/${postId}`,
         {
@@ -164,6 +174,7 @@ export default function Dashboard() {
 
   const handleLike = async (postId) => {
     try {
+      const token = localStorage.getItem('token');
       const likeRes = await axios.get(
         `http://localhost:5000/api/likes?postId=${postId}&userId=${userId}`,
         {
@@ -262,8 +273,7 @@ export default function Dashboard() {
             Welcome, {userInfo?.firstName} {userInfo?.lastName}
           </h2>
           <AddPost
-            userId={localStorage.getItem("userId")}
-            token={token}
+            
             onPostAdded={handlePostAdded}
           />
         </div>

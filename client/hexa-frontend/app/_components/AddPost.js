@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { FaPlus } from "react-icons/fa";
 
-export default function AddPost({ userId, token, onPostAdded }) {
+export default function AddPost({onPostAdded }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [postData, setPostData] = useState({
     title: "",
@@ -20,6 +20,9 @@ export default function AddPost({ userId, token, onPostAdded }) {
 
   const handlePostSubmit = async () => {
     try {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+
       const tagsArray = postData.tags.split(",").map((tag) => tag.trim());
 
       console.log("the data to be posted is ", {
@@ -55,17 +58,14 @@ export default function AddPost({ userId, token, onPostAdded }) {
     }
   };
 
-  
-
   return (
     <div>
       <button
-  className=" px-4 py-2 rounded-md bg-black"
-  onClick={() => setIsDialogOpen(true)}
->
-  <FaPlus/>
-</button>
-
+        className=" px-4 py-2 rounded-md bg-black"
+        onClick={() => setIsDialogOpen(true)}
+      >
+        <FaPlus />
+      </button>
 
       {isDialogOpen && (
         <div

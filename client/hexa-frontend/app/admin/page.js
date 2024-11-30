@@ -10,10 +10,13 @@ export default function Admin() {
   const [approvedPosts, setApprovedPosts] = useState([]);
   const [error, setError] = useState("");
   const router = useRouter();
-
-  const token = localStorage.getItem("token");
+  const [userId ,setUserId] = useState('');
+  
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+    setUserId(userId);
     if (!token) {
       router.push("/login");
     }
@@ -47,6 +50,7 @@ export default function Admin() {
 
   const handleApprove = async (postId) => {
     try {
+      const token = localStorage.getItem('token');
       const res = await axios.patch(
         `http://localhost:5000/api/posts/${postId}/approve`,
         {},
@@ -68,6 +72,7 @@ export default function Admin() {
 
   const handleDelete = async (postId, type) => {
     try {
+      const token = localStorage.getItem('token');
       const res = await axios.delete(
         `http://localhost:5000/api/posts/${postId}`,
         {
@@ -170,7 +175,7 @@ export default function Admin() {
           <div  className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-6">
             {approvedPosts.map((post) => (
               <div
-                key={post._id || "dfjkl"}
+                key={post._id || 'fda'}
                 className="p-4 bg-white bg-opacity-10 rounded-lg shadow-lg border border-gray-200 hover:cursor-pointer text-white"
                 style={{ boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)" }}
               >
