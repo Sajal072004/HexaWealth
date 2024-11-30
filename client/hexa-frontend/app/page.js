@@ -117,32 +117,32 @@ export default function Home() {
 
 
       {/* Testimonials */}
-      <section className="py-16 bg-white">
-        <div className="max-w-6xl mx-auto text-center px-4 md:px-8">
-          <h2 className="text-2xl md:text-3xl font-bold mb-8 text-black">What Our Users Say</h2>
-          <div className="flex gap-4 md:gap-8 overflow-x-auto md:flex-nowrap px-2 md:px-6">
-            <div className="bg-white border border-black p-4 md:p-6 rounded-lg shadow-lg hover:shadow-xl transition min-w-[250px] md:min-w-[300px]">
-              <p className="text-gray-600 mb-4">
-                "Hexawealth gave me the confidence to make smarter financial
-                decisions!"
-              </p>
-              <h4 className="text-lg md:text-xl font-semibold text-black">John Doe</h4>
-            </div>
-            <div className="bg-white border border-black p-4 md:p-6 rounded-lg shadow-lg hover:shadow-xl transition min-w-[250px] md:min-w-[300px]">
-              <p className="text-gray-600 mb-4">
-                "The community support and expert advice are incredible!"
-              </p>
-              <h4 className="text-lg md:text-xl font-semibold text-black">Jane Smith</h4>
-            </div>
-            <div className="bg-white border border-black p-4 md:p-6 rounded-lg shadow-lg hover:shadow-xl transition min-w-[250px] md:min-w-[300px]">
-              <p className="text-gray-600 mb-4">
-                "The resources helped me start investing with confidence."
-              </p>
-              <h4 className="text-lg md:text-xl font-semibold text-black">Alice Brown</h4>
-            </div>
-          </div>
-        </div>
-      </section>
+<section className="py-16 bg-white">
+  <div className="max-w-6xl mx-auto text-center px-4 md:px-8">
+    <h2 className="text-2xl md:text-3xl font-bold mb-8 text-black">What Our Users Say</h2>
+    <div className="flex gap-4 md:gap-8 overflow-x-auto md:flex-nowrap px-2 md:px-6">
+      <div className="bg-white border border-black p-4 md:p-6 rounded-lg shadow-lg hover:shadow-xl transition min-w-[250px] md:min-w-[300px]">
+        <p className="text-gray-600 mb-4">
+          &quot;Hexawealth gave me the confidence to make smarter financial decisions!&quot;
+        </p>
+        <h4 className="text-lg md:text-xl font-semibold text-black">John Doe</h4>
+      </div>
+      <div className="bg-white border border-black p-4 md:p-6 rounded-lg shadow-lg hover:shadow-xl transition min-w-[250px] md:min-w-[300px]">
+        <p className="text-gray-600 mb-4">
+          &quot;The community support and expert advice are incredible!&quot;
+        </p>
+        <h4 className="text-lg md:text-xl font-semibold text-black">Jane Smith</h4>
+      </div>
+      <div className="bg-white border border-black p-4 md:p-6 rounded-lg shadow-lg hover:shadow-xl transition min-w-[250px] md:min-w-[300px]">
+        <p className="text-gray-600 mb-4">
+          &quot;The resources helped me start investing with confidence.&quot;
+        </p>
+        <h4 className="text-lg md:text-xl font-semibold text-black">Alice Brown</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Footer */}
       <footer className="bg-gray-200 py-8">

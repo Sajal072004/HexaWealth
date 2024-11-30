@@ -142,6 +142,7 @@ export default function Signup() {
               Login
             </a>
           </p>
+
           {/* Homepage button */}
           <button
             onClick={handleHomepageRedirect}
