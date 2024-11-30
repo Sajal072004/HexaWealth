@@ -9,6 +9,7 @@ import AddPost from "../_components/AddPost";
 import { FaPlus } from "react-icons/fa";
 import { format } from "date-fns";
 import { FaRegComment } from "react-icons/fa";
+import {toast} from 'react-toastify';
 
 export default function Dashboard() {
   const [userInfo, setUserInfo] = useState(null);
@@ -99,9 +100,12 @@ export default function Dashboard() {
         }
       );
 
+      toast.success("Comment Added");
+
       setCommentInput("");
       setSelectedPost(null);
     } catch (err) {
+      toast.error("Error posting comment");
       console.error("Error posting comment:", err);
     }
   };

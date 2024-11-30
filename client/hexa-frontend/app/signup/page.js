@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import {toast} from 'react-toastify';
 
 export default function Signup() {
   const [firstName, setFirstName] = useState("");
@@ -32,16 +33,23 @@ export default function Signup() {
         localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data.user.id); // Store userId
         localStorage.setItem("isAdmin", data.user.isAdmin);
-        router.push("/dashboard");
+        toast.success("Sign Up Successful");
+        setTimeout(()=> {
+          router.push("/dashboard");
+        },1000);
+        
       } else {
         setError("Error creating account"); // If no token in response, show error
+        toast.error("Error creating account");
       }
     } catch (err) {
       // If there's an error in the request (network error, etc.)
       if (err?.response?.data?.error === "User already exists") {
         setError("User already exists. Please login");
+        toast.error("User already exists. Please login");
       } else {
         setError("An error occurred. Please try again later.");
+        toast.error("An error occurred. Please try again later.");
       }
       console.error("Signup error:", err); // Log the error for debugging purposes
     }

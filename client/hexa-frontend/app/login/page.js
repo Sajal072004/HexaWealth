@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import {toast} from 'react-toastify';
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -28,19 +29,28 @@ export default function Login() {
         localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data.user.id);
         localStorage.setItem("isAdmin", data.user.isAdmin);
-        router.push("/dashboard");
+        toast.success("Login Successful");
+        setTimeout(()=>{
+          router.push("/dashboard");
+        },1000);
+        
       } else {
         setError("Invalid credentials");
+        toast.error("Invalid Credentials");
       }
     } catch (err) {
       if (err.response?.data?.error === "User not found") {
         setError("User not found. Please register first.");
+        toast.error("User not found. Please register first.");
       } else if (err.response?.data?.error === "Invalid credentials") {
         setError("Incorrect password. Please try again.");
+        toast.error("Incorrect password. Please try again.")
       } else {
         setError("An error occurred. Please try again later.");
+        toast.error("An error occurred. Please try again later.")
       }
       console.error("Login error:", err);
+      
     }
   };
 

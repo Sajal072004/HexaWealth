@@ -3,6 +3,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { FaPlus } from "react-icons/fa";
+import {toast} from 'react-toastify';
 
 export default function AddPost({onPostAdded }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -51,9 +52,11 @@ export default function AddPost({onPostAdded }) {
       if (response.status === 201) {
         setPostData({ title: "", content: "", tags: "" });
         setIsDialogOpen(false);
+        toast.success("Post is created and is pending for approval");
       }
     } catch (err) {
       setError("Failed to add post. Please try again.");
+      toast.error("Failed to add post. Please try again.")
       console.error(err);
     }
   };

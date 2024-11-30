@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
+import {toast} from 'react-toastify';
 
 export default function Admin() {
   const [pendingPosts, setPendingPosts] = useState([]);
@@ -61,11 +62,14 @@ export default function Admin() {
       if (res.status === 200) {
         setPendingPosts(pendingPosts.filter((post) => post._id !== postId));
         setApprovedPosts([...approvedPosts, res.data]); // Add the approved post to approved posts
+        toast.success("Post Approved");
       } else {
         setError("Error approving the post");
+        toast.error("Error approving the post")
       }
     } catch (err) {
       setError("An error occurred while approving the post.");
+      toast.error("An error occurred while approving the post.");
     }
   };
 
@@ -85,11 +89,14 @@ export default function Admin() {
         } else {
           setApprovedPosts(approvedPosts.filter((post) => post._id !== postId));
         }
+        toast.success("Post Deleted");
       } else {
         setError("Error deleting the post");
+        toast.error("Error deleting the post")
       }
     } catch (err) {
       setError("An error occurred while deleting the post.");
+      toast.error("An error occurred while deleting the post.");
     }
   };
 
