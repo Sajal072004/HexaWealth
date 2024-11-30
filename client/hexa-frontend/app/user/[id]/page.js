@@ -7,6 +7,7 @@ import { format } from "date-fns"; // Add date-fns for formatting
 const User = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [pendingPosts, setPendingPosts] = useState([]);
+  const [token , setToken] = useState('')
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -14,6 +15,7 @@ const User = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token"); // Assuming token-based authentication
+    setToken(token);
   const userId = localStorage.getItem("userId");
     if (!token) {
       router.push("/login"); // Redirect to login if not authenticated
