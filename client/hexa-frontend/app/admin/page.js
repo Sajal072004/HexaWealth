@@ -130,7 +130,7 @@ export default function Admin() {
                   <div className="mt-2 mb-4 space-x-2 ">
                     {post.tags?.map((tag, index) => (
                       <span
-                        key={index}
+                        key={tag}
                         className="bg-white text-black border border-black px-3 py-1 rounded-md text-sm"
                       >
                         {tag}

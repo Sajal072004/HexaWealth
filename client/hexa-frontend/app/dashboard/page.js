@@ -20,7 +20,15 @@ export default function Dashboard() {
   const [selectedPost, setSelectedPost] = useState(null); // Selected post for showing comments
   const router = useRouter();
 
-  const [addPost, setAddPost] = useState(false);
+  const [token, setToken] = useState("");
+const [userId, setUserId] = useState("");
+
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+  setToken(token);
+  setUserId(userId);
+},[]);
 
   
 
