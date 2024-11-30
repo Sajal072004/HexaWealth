@@ -105,8 +105,7 @@ useEffect(() => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
+    
     if (!token) {
       router.push("/login");
     }
@@ -272,7 +271,7 @@ useEffect(() => {
             Welcome, {userInfo?.firstName} {userInfo?.lastName}
           </h2>
           <AddPost
-            userId={localStorage.getItem("userId")}
+            userId={userId}
             token={token}
             onPostAdded={handlePostAdded}
           />
