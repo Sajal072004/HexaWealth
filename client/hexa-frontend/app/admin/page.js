@@ -11,9 +11,10 @@ export default function Admin() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const token = localStorage.getItem("token");
+  
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     if (!token) {
       router.push("/login");
     }
