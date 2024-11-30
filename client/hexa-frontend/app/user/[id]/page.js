@@ -21,6 +21,7 @@ const User = () => {
 
     const fetchUserInfo = async () => {
       try {
+        const token = localStorage.getItem('token');
         const res = await axios.get(
           `https://hexawealth-backend.onrender.com/api/auth/user/${userId}`,
           {
@@ -35,6 +36,7 @@ const User = () => {
 
     const fetchPendingPosts = async () => {
       try {
+        const token = localStorage.getItem('token');
         const res = await axios.get(
           "https://hexawealth-backend.onrender.com/api/posts/pending",
           {
